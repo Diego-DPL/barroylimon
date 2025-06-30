@@ -3,7 +3,7 @@ import Button from "../components/ui/button"
 import { Input } from "../components/ui/input"
 import { ShoppingBag, User, Search, Menu, ArrowRight, Play } from "lucide-react"
 import LimonHero from '../assets/LimonAmpliado.jpg';
-import LimonAcero from '../assets/Limon_collar_acero_dorado.jpg';
+import LimonAcero from '../assets/Limon_collar_acero_dorado.JPG';
 
 export default function Home() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
