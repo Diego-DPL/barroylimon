@@ -337,8 +337,8 @@ export default function Home() {
               <h5 className="text-white font-light mb-6 tracking-wide">Contacto</h5>
               <ul className="space-y-3 text-stone-400 font-light">
                 <li>Barro y Limón</li>
-                <li>info@barrolimon.com</li>
-                <li>+34 968 000 000</li>
+                <li>info@barroylimon.com</li>
+                {/* <li>+34 968 000 000</li> */}
               </ul>
             </div>
           </div>
