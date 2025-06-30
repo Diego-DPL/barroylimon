@@ -1,36 +1,37 @@
-import { useState } from "react"
+// import { useState } from "react"
 import Button from "../components/ui/button"
-import { Input } from "../components/ui/input"
-import { ShoppingBag, User, Search, Menu, ArrowRight, Play } from "lucide-react"
+// import { Input } from "../components/ui/input"
+// import { ShoppingBag, User, Search, Menu, ArrowRight, Play } from "lucide-react"
 import LimonHero from '../assets/LimonAmpliado.jpg';
 import LimonAcero from '../assets/Limon_collar_acero_dorado.JPG';
+import LogoPNG from '../assets/Logopng.png';
 
 export default function Home() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false)
+//   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
-  const featuredProducts = [
-    {
-      id: 1,
-      name: "Collar Limón Acero inoxidable",
-      price: "25",
-      image: LimonAcero,
-      category: "Nueva Colección",
-    },
-    {
-      id: 2,
-      name: "Pendientes Terracota",
-      price: "195",
-      image: "https://via.placeholder.com/400x500/d6d3d1/78716c?text=Pendientes+Terracota",
-      category: "Edición Limitada",
-    },
-    {
-      id: 3,
-      name: "Anillo Mediterráneo",
-      price: "245",
-      image: "https://via.placeholder.com/400x500/d6d3d1/78716c?text=Anillo+Mediterráneo",
-      category: "Exclusivo",
-    },
-  ]
+//   const featuredProducts = [
+//     {
+//       id: 1,
+//       name: "Collar Limón Acero inoxidable",
+//       price: "25",
+//       image: LimonAcero,
+//       category: "Nueva Colección",
+//     },
+//     {
+//       id: 2,
+//       name: "Pendientes Terracota",
+//       price: "195",
+//       image: "https://via.placeholder.com/400x500/d6d3d1/78716c?text=Pendientes+Terracota",
+//       category: "Edición Limitada",
+//     },
+//     {
+//       id: 3,
+//       name: "Anillo Mediterráneo",
+//       price: "245",
+//       image: "https://via.placeholder.com/400x500/d6d3d1/78716c?text=Anillo+Mediterráneo",
+//       category: "Exclusivo",
+//     },
+//   ]
 
   return (
     <div className="min-h-screen bg-stone-50">
@@ -40,13 +41,18 @@ export default function Home() {
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
             <a href="/" className="flex items-center">
-              <div className="text-2xl font-light tracking-wider text-stone-800">
-                BARRO<span className="text-amber-600">y</span>LIMÓN
-              </div>
+                <div className="text-2xl font-light tracking-wider text-stone-800">
+                    BARRO<span className="text-amber-600">y</span>LIMÓN
+                </div>
+                <img 
+                    src={LogoPNG} 
+                    alt="Barro y Limón logo" 
+                    className="w-8 h-8 ml-2 object-contain"
+                />
             </a>
 
             {/* Desktop Navigation */}
-            <nav className="hidden lg:flex items-center space-x-12">
+            {/* <nav className="hidden lg:flex items-center space-x-12">
               <a
                 href="/coleccion"
                 className="text-stone-700 hover:text-stone-900 font-light tracking-wide transition-colors"
@@ -66,10 +72,10 @@ export default function Home() {
                 Nuestro Proceso
               </a>
 
-            </nav>
+            </nav> */}
 
             {/* Actions */}
-            <div className="flex items-center space-x-6">
+            {/* <div className="flex items-center space-x-6">
               <Button variant="ghost" size="sm" className="text-stone-700 hover:text-stone-900">
                 <Search className="h-5 w-5" />
               </Button>
@@ -87,7 +93,7 @@ export default function Home() {
               >
                 <Menu className="h-5 w-5" />
               </Button>
-            </div>
+            </div> */}
           </div>
         </div>
       </header>
@@ -97,7 +103,7 @@ export default function Home() {
         <div className="absolute inset-0">
           <img
             src={LimonHero}
-            alt="Joyería cerámica mediterránea"
+            alt="Joyería arcilla mediterránea"
             className="w-full h-full object-cover"
           />
           <div className="absolute inset-0 bg-stone-900/50" />
@@ -116,8 +122,8 @@ export default function Home() {
             size="lg"
             className="bg-transparent border border-white text-white hover:bg-white hover:text-stone-900 px-12 py-4 text-lg font-light tracking-wide transition-all duration-300"
           >
-            Descubrir Colección
-            <ArrowRight className="ml-3 h-5 w-5" />
+            Muy Pronto
+            {/* <ArrowRight className="ml-3 h-5 w-5" /> */}
           </Button>
         </div>
 
@@ -127,8 +133,57 @@ export default function Home() {
         </div>
       </section>
 
+    {/* Coming Soon Section */}
+    <section className="py-32 bg-gradient-to-b from-stone-50 to-white">
+        <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
+            <div className="mb-8">
+                <div className="inline-block px-6 py-2 bg-amber-100 text-amber-800 rounded-full text-sm font-light tracking-wide mb-8">
+                    Próximamente
+                </div>
+            </div>
+            
+            <h2 className="text-5xl lg:text-6xl font-light text-stone-800 mb-8 tracking-tight leading-tight">
+                Muy Pronto
+                <br />
+                <span className="italic font-serif text-amber-700">Disponible</span>
+            </h2>
+            
+            <p className="text-xl text-stone-600 mb-12 font-light max-w-3xl mx-auto leading-relaxed">
+                Estamos preparando con mimo cada detalle para ofrecerte la mejor experiencia. 
+                Nuestra tienda online estará disponible muy pronto con nuestra primera colección 
+                de joyería arcilla mediterránea.
+            </p>
+            
+            <div className="grid md:grid-cols-3 gap-8 mb-16">
+                <div className="text-center p-8">
+                    <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <div className="w-8 h-8 bg-amber-600 rounded-full"></div>
+                    </div>
+                    <h3 className="text-xl font-light text-stone-800 mb-4">Colección Exclusiva</h3>
+                    <p className="text-stone-600 font-light">Piezas únicas creadas a mano por nuestros artesanos</p>
+                </div>
+                
+                <div className="text-center p-8">
+                    <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <div className="w-8 h-8 bg-amber-600 rounded-full"></div>
+                    </div>
+                    <h3 className="text-xl font-light text-stone-800 mb-4">Técnica Mediterránea</h3>
+                    <p className="text-stone-600 font-light">Inspirado en la tradición alfarera de la huerta murciana</p>
+                </div>
+                
+                <div className="text-center p-8">
+                    <div className="w-16 h-16 bg-amber-100 rounded-full flex items-center justify-center mx-auto mb-6">
+                        <div className="w-8 h-8 bg-amber-600 rounded-full"></div>
+                    </div>
+                    <h3 className="text-xl font-light text-stone-800 mb-4">Garantía Artesanal</h3>
+                    <p className="text-stone-600 font-light">Cada pieza está respaldada por nuestra garantía de calidad</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
       {/* Featured Products */}
-      <section className="py-32 px-6 lg:px-8">
+      {/* <section className="py-32 px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-20">
             <h2 className="text-5xl lg:text-6xl font-light text-stone-800 mb-6 tracking-tight">Piezas Selectas</h2>
@@ -161,7 +216,7 @@ export default function Home() {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Process Section */}
       <section className="py-32 bg-white">
@@ -182,19 +237,19 @@ export default function Home() {
                 consigo la esencia del sol mediterráneo y la sabiduría ancestral.
               </p>
 
-              <Button
+              {/* <Button
                 variant="outline"
                 className="border-stone-300 text-stone-700 hover:bg-stone-50 px-8 py-3 font-light tracking-wide bg-transparent"
               >
                 <Play className="mr-3 h-4 w-4" />
                 Ver Proceso
-              </Button>
+              </Button> */}
             </div>
 
             <div className="relative">
               <div className="aspect-[4/5] bg-stone-100 overflow-hidden">
                 <img
-                  src="https://via.placeholder.com/480x600/a8a29e/ffffff?text=Proceso+Artesanal"
+                  src={LimonAcero}
                   alt="Proceso artesanal"
                   className="w-full h-full object-cover"
                 />
@@ -213,12 +268,12 @@ export default function Home() {
             "La belleza reside en la imperfección perfecta de lo hecho a mano"
           </blockquote>
           <div className="w-16 h-px bg-amber-600 mx-auto mb-8" />
-          <p className="text-lg font-light text-stone-300 tracking-wide">FILOSOFÍA BARRO·LIMÓN</p>
+          <p className="text-lg font-light text-stone-300 tracking-wide">FILOSOFÍA BARRO y LIMÓN</p>
         </div>
       </section>
 
       {/* Newsletter */}
-      <section className="py-24 bg-amber-50">
+      {/* <section className="py-24 bg-amber-50">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
           <h4 className="text-3xl font-light text-stone-800 mb-6 tracking-wide">Manténgase Informado</h4>
           <p className="text-lg text-stone-600 mb-12 font-light">
@@ -236,7 +291,7 @@ export default function Home() {
             </Button>
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Footer */}
       <footer className="bg-stone-900 text-stone-300 py-16">
@@ -247,12 +302,12 @@ export default function Home() {
                 BARRO<span className="text-amber-600">y</span>LIMÓN
               </div>
               <p className="text-stone-400 mb-8 max-w-md font-light leading-relaxed">
-                Atelier de joyería cerámica mediterránea. Creaciones únicas inspiradas en la tradición artesanal de la
+                Joyería arcilla mediterránea. Creaciones únicas inspiradas en la tradición artesanal de la
                 huerta murciana.
               </p>
             </div>
 
-            <div>
+            {/* <div>
               <h5 className="text-white font-light mb-6 tracking-wide">Información</h5>
               <ul className="space-y-3 text-stone-400 font-light">
                 <li>
@@ -276,7 +331,7 @@ export default function Home() {
                   </a>
                 </li>
               </ul>
-            </div>
+            </div> */}
 
             <div>
               <h5 className="text-white font-light mb-6 tracking-wide">Contacto</h5>
@@ -289,7 +344,7 @@ export default function Home() {
           </div>
 
           <div className="border-t border-stone-800 mt-12 pt-8 text-center text-stone-500 font-light">
-            <p>&copy; 2024 Barro y Limón. Todos los derechos reservados.</p>
+            <p>&copy; 2025 Barro y Limón. Todos los derechos reservados.</p>
           </div>
         </div>
       </footer>
