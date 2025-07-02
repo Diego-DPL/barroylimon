@@ -1,13 +1,21 @@
 // utils/supabaseClient.ts
 import { createClient } from '@supabase/supabase-js'
 
-// NEXT_PUBLIC_* variables son inyectadas en tiempo de compilación por Vercel/Next.js
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL!
-const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!
+/**
+ * En Vite las variables de entorno públicas deben empezar con VITE_
+ * Crea un archivo .env en la raíz de tu proyecto con:
+ *   VITE_SUPABASE_URL=https://tu-proyecto.supabase.co
+ *   VITE_SUPABASE_ANON_KEY=tu_anon_key
+ * Luego reinicia el servidor de Vite (npm run dev).
+ */
+
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL as string
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string
 
 if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error('Faltan las variables de entorno NEXT_PUBLIC_SUPABASE_URL o NEXT_PUBLIC_SUPABASE_ANON_KEY')
+  throw new Error(
+    'Faltan VITE_SUPABASE_URL o VITE_SUPABASE_ANON_KEY en las variables de entorno'
+  )
 }
 
-// Exportamos el cliente Supabase
 export const supabase = createClient(supabaseUrl, supabaseAnonKey)
