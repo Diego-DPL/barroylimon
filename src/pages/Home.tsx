@@ -1,10 +1,14 @@
 // import { useState } from "react"
 import Button from "../components/ui/button"
-// import { Input } from "../components/ui/input"
 // import { ShoppingBag, User, Search, Menu, ArrowRight, Play } from "lucide-react"
 import LimonHero from '../assets/LimonAmpliado.jpg';
 import LimonAcero from '../assets/Limon_collar_acero_dorado.JPG';
 import LogoPNG from '../assets/Logopng.png';
+import NewsletterForm from "../components/NewsletterForm";
+
+
+
+
 
 export default function Home() {
 //   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -273,25 +277,17 @@ export default function Home() {
       </section>
 
       {/* Newsletter */}
-      {/* <section className="py-24 bg-amber-50">
-        <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
-          <h4 className="text-3xl font-light text-stone-800 mb-6 tracking-wide">Manténgase Informado</h4>
-          <p className="text-lg text-stone-600 mb-12 font-light">
-            Reciba noticias exclusivas sobre nuevas colecciones y eventos especiales
-          </p>
-
-          <div className="flex flex-col sm:flex-row gap-4 max-w-md mx-auto">
-            <Input
-              type="email"
-              placeholder="Su dirección de correo"
-              className="flex-1 border-stone-300 bg-white px-6 py-4 text-stone-700 placeholder:text-stone-400 font-light"
-            />
-            <Button className="bg-stone-800 hover:bg-stone-900 text-white px-8 py-4 font-light tracking-wide">
-              Suscribirse
-            </Button>
-          </div>
-        </div>
-      </section> */}
+        <section className="py-24 bg-amber-50">
+            <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
+                <h4 className="text-3xl font-light text-stone-800 mb-6 tracking-wide">
+                Manténgase Informado
+                </h4>
+                <p className="text-lg text-stone-600 mb-12 font-light">
+                Reciba noticias exclusivas sobre nuevas colecciones y eventos especiales
+                </p>
+                <NewsletterForm />
+            </div>
+        </section>
 
       {/* Footer */}
       <footer className="bg-stone-900 text-stone-300 py-16">
