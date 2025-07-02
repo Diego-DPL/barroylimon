@@ -31,10 +31,7 @@ export default function NewsletterForm() {
     // Insertar o actualizar suscriptor
     const { error } = await supabase
       .from('newsletter_subscribers')
-      .upsert(
-        { email, user_id: userId },
-        { onConflict: 'email' }
-      )
+      .insert({ email, user_id: userId })
 
     setLoading(false)
 
