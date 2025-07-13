@@ -23,23 +23,45 @@ export default function NewsletterForm() {
     }
 
     setLoading(true)
-    
+
     // Obtener usuario actual (si está logueado)
     const { data: sessionData } = await supabase.auth.getSession()
     const userId = sessionData?.session?.user.id || null
 
-    // Insertar o actualizar suscriptor
-    const { error } = await supabase
+    // 1) Insert en la tabla de suscriptores y obtener el registro
+    const { error: dbError } = await supabase
       .from('newsletter_subscribers')
       .insert({ email, user_id: userId })
+      .select()
+      .single()
 
-    setLoading(false)
+    if (dbError) {
+      console.error('DB error:', dbError)
+      setFeedback({ success: false, message: 'No se ha podido suscribir. Inténtalo de nuevo.' })
+      setLoading(false)
+      return
+    }
+
+    // 2) Llamada a Edge Function para enviar welcome mail
+    const { data, error } = await supabase.functions.invoke('send-welcome', {
+      body: JSON.stringify({ email }),
+    })
 
     if (error) {
-      console.error('Error al suscribir:', error)
-      setFeedback({ success: false, message: 'Hubo un error. Inténtalo de nuevo.' })
+      console.error('Function invocation error:', error)
+      setFeedback({ success: false, message: 'Error al contactar el servicio de correo. Inténtalo más tarde.' })
+    } else if (data.error) {
+      // Error de negocio devuelto por la función
+      console.error('Business logic error:', data.error)
+      setFeedback({ success: false, message: data.error })
     } else {
-      setFeedback({ success: true, message: '¡Te has suscrito correctamente!' })
+      // Éxito
+      console.log('send-welcome response:', data)
+      setFeedback({ success: true, message: data.message || '¡Te has suscrito correctamente! Revisa tu correo.' })
+    }
+
+    setLoading(false)
+    if (feedback?.success) {
       setEmail('')
     }
   }
@@ -51,6 +73,7 @@ export default function NewsletterForm() {
         placeholder="Su dirección de correo"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
+        required
         className="flex-1 border-stone-300 bg-white px-6 py-4 text-stone-700 placeholder:text-stone-400 font-light rounded"
       />
       <button

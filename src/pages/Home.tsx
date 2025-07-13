@@ -6,10 +6,6 @@ import LimonAcero from '../assets/Limon_collar_acero_dorado.JPG';
 import LogoPNG from '../assets/Logopng.png';
 import NewsletterForm from "../components/NewsletterForm";
 
-
-
-
-
 export default function Home() {
 //   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
