@@ -3,5 +3,9 @@
   "references": [
     { "path": "./tsconfig.app.json" },
     { "path": "./tsconfig.node.json" }
+  ],
+  "exclude": [
+    "node_modules",
+    "supabase/functions"        // <— aquí ignoras tu carpeta de Edge Functions
   ]
 }
