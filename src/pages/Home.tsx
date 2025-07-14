@@ -1,12 +1,24 @@
 // import { useState } from "react"
+import { useState, useEffect } from "react"
 import Button from "../components/ui/button"
 // import { ShoppingBag, User, Search, Menu, ArrowRight, Play } from "lucide-react"
 import LimonHero from '../assets/LimonAmpliado.jpg';
 import LimonAcero from '../assets/Limon_collar_acero_dorado.JPG';
 import LogoPNG from '../assets/Logopng.png';
 import NewsletterForm from "../components/NewsletterForm";
+import Modal from "../components/ui/modal";
 
 export default function Home() {
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsModalOpen(true)
+    }, 5000)
+
+    return () => clearTimeout(timer)
+  }, [])
+
 //   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
 //   const featuredProducts = [
@@ -340,6 +352,23 @@ export default function Home() {
           </div>
         </div>
       </footer>
+
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
+        <div className="text-center p-4">
+            <div className="mb-4">
+                <div className="inline-block px-4 py-1 bg-amber-100 text-amber-800 rounded-full text-sm font-light tracking-wide">
+                    Próximamente
+                </div>
+            </div>
+            <h2 className="text-3xl font-light text-stone-800 mb-4 tracking-tight">
+                Nuestra tienda está casi lista
+            </h2>
+            <p className="text-stone-600 mb-8 font-light leading-relaxed">
+                Estamos dando los últimos toques a nuestra colección. Suscríbete a nuestra newsletter para ser el primero en saber cuándo abrimos y recibir ofertas exclusivas.
+            </p>
+            <NewsletterForm />
+        </div>
+      </Modal>
     </div>
   )
 }

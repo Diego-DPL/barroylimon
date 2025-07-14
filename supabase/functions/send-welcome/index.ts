@@ -143,7 +143,7 @@ serve(async (req) => {
         </p>
         
         <div class="signature">
-          <p>Con cariño y gratitud,</p>
+          <p>Con mucho cariño,</p>
           <p><strong>El equipo de Barro y Limón</strong></p>
           <p><em>Creando belleza desde la tradición</em></p>
         </div>
