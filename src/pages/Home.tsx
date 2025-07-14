@@ -4,20 +4,30 @@ import Button from "../components/ui/button"
 // import { ShoppingBag, User, Search, Menu, ArrowRight, Play } from "lucide-react"
 import LimonHero from '../assets/LimonAmpliado.jpg';
 import LimonAcero from '../assets/Limon_collar_acero_dorado.JPG';
-import LogoPNG from '../assets/Logopng.png';
+// import LogoPNG from '../assets/Logopng.png';
 import NewsletterForm from "../components/NewsletterForm";
 import Modal from "../components/ui/modal";
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false)
+  const [showSuccessModal, setShowSuccessModal] = useState(false)
 
   useEffect(() => {
     const timer = setTimeout(() => {
-      setIsModalOpen(true)
+      // Solo abrir si no se ha mostrado ya el de éxito
+      if (!sessionStorage.getItem('newsletterModalShown')) {
+        setIsModalOpen(true)
+        sessionStorage.setItem('newsletterModalShown', 'true');
+      }
     }, 5000)
 
     return () => clearTimeout(timer)
   }, [])
+
+  const handleSuccess = () => {
+    setIsModalOpen(false)
+    setShowSuccessModal(true)
+  }
 
 //   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
@@ -46,70 +56,7 @@ export default function Home() {
 //   ]
 
   return (
-    <div className="min-h-screen bg-stone-50">
-      {/* Header */}
-      <header className="fixed top-0 w-full z-50 bg-white/80 backdrop-blur-md border-b border-stone-200/50">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20">
-            {/* Logo */}
-            <a href="/" className="flex items-center">
-                <div className="text-2xl font-light tracking-wider text-stone-800">
-                    BARRO<span className="text-amber-600">y</span>LIMÓN
-                </div>
-                <img 
-                    src={LogoPNG} 
-                    alt="Barro y Limón logo" 
-                    className="w-8 h-8 ml-2 object-contain"
-                />
-            </a>
-
-            {/* Desktop Navigation */}
-            {/* <nav className="hidden lg:flex items-center space-x-12">
-              <a
-                href="/coleccion"
-                className="text-stone-700 hover:text-stone-900 font-light tracking-wide transition-colors"
-              >
-                Colección
-              </a>
-              <a
-                href="/alta-joyeria"
-                className="text-stone-700 hover:text-stone-900 font-light tracking-wide transition-colors"
-              >
-                Joyería
-              </a>
-              <a
-                href="/proceso"
-                className="text-stone-700 hover:text-stone-900 font-light tracking-wide transition-colors"
-              >
-                Nuestro Proceso
-              </a>
-
-            </nav> */}
-
-            {/* Actions */}
-            {/* <div className="flex items-center space-x-6">
-              <Button variant="ghost" size="sm" className="text-stone-700 hover:text-stone-900">
-                <Search className="h-5 w-5" />
-              </Button>
-              <Button variant="ghost" size="sm" className="text-stone-700 hover:text-stone-900">
-                <User className="h-5 w-5" />
-              </Button>
-              <Button variant="ghost" size="sm" className="text-stone-700 hover:text-stone-900">
-                <ShoppingBag className="h-5 w-5" />
-              </Button>
-              <Button
-                variant="ghost"
-                size="sm"
-                className="lg:hidden text-stone-700"
-                onClick={() => setIsMenuOpen(!isMenuOpen)}
-              >
-                <Menu className="h-5 w-5" />
-              </Button>
-            </div> */}
-          </div>
-        </div>
-      </header>
-
+    <>
       {/* Hero Section */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
@@ -293,65 +240,9 @@ export default function Home() {
                 <p className="text-lg text-stone-600 mb-12 font-light">
                 Reciba noticias exclusivas sobre nuevas colecciones y eventos especiales
                 </p>
-                <NewsletterForm />
+                <NewsletterForm onSuccess={handleSuccess} />
             </div>
         </section>
-
-      {/* Footer */}
-      <footer className="bg-stone-900 text-stone-300 py-16">
-        <div className="max-w-7xl mx-auto px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-12">
-            <div className="col-span-1 md:col-span-2">
-              <div className="text-2xl font-light tracking-wider text-white mb-6">
-                BARRO<span className="text-amber-600">y</span>LIMÓN
-              </div>
-              <p className="text-stone-400 mb-8 max-w-md font-light leading-relaxed">
-                Joyería arcilla mediterránea. Creaciones únicas inspiradas en la tradición artesanal de la
-                huerta murciana.
-              </p>
-            </div>
-
-            {/* <div>
-              <h5 className="text-white font-light mb-6 tracking-wide">Información</h5>
-              <ul className="space-y-3 text-stone-400 font-light">
-                <li>
-                  <a href="/cuidados" className="hover:text-white transition-colors">
-                    Cuidado de Piezas
-                  </a>
-                </li>
-                <li>
-                  <a href="/envios" className="hover:text-white transition-colors">
-                    Envíos
-                  </a>
-                </li>
-                <li>
-                  <a href="/devoluciones" className="hover:text-white transition-colors">
-                    Devoluciones
-                  </a>
-                </li>
-                <li>
-                  <a href="/tallas" className="hover:text-white transition-colors">
-                    Guía de Tallas
-                  </a>
-                </li>
-              </ul>
-            </div> */}
-
-            <div>
-              <h5 className="text-white font-light mb-6 tracking-wide">Contacto</h5>
-              <ul className="space-y-3 text-stone-400 font-light">
-                <li>Barro y Limón</li>
-                <li>info@barroylimon.com</li>
-                {/* <li>+34 968 000 000</li> */}
-              </ul>
-            </div>
-          </div>
-
-          <div className="border-t border-stone-800 mt-12 pt-8 text-center text-stone-500 font-light">
-            <p>&copy; 2025 Barro y Limón. Todos los derechos reservados.</p>
-          </div>
-        </div>
-      </footer>
 
       <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <div className="text-center p-4">
@@ -366,9 +257,26 @@ export default function Home() {
             <p className="text-stone-600 mb-8 font-light leading-relaxed">
                 Estamos dando los últimos toques a nuestra colección. Suscríbete a nuestra newsletter para ser el primero en saber cuándo abrimos y recibir ofertas exclusivas.
             </p>
-            <NewsletterForm />
+            <NewsletterForm onSuccess={handleSuccess} />
         </div>
       </Modal>
-    </div>
+
+      <Modal isOpen={showSuccessModal} onClose={() => setShowSuccessModal(false)}>
+        <div className="text-center p-8">
+            <h2 className="text-3xl font-light text-stone-800 mb-4 tracking-tight">
+                ¡Gracias por suscribirte!
+            </h2>
+            <p className="text-stone-600 mb-8 font-light leading-relaxed">
+                Te hemos enviado un correo de confirmación. Serás el primero en enterarte de nuestro lanzamiento y recibirás noticias exclusivas.
+            </p>
+            <Button
+                onClick={() => setShowSuccessModal(false)}
+                className="bg-stone-800 hover:bg-stone-900 text-white px-8 py-3 font-light tracking-wide"
+            >
+                Cerrar
+            </Button>
+        </div>
+      </Modal>
+    </>
   )
 }

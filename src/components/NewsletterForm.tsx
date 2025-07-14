@@ -8,7 +8,11 @@ interface NewsletterResponse {
   message: string
 }
 
-export default function NewsletterForm() {
+interface NewsletterFormProps {
+  onSuccess?: () => void
+}
+
+export default function NewsletterForm({ onSuccess }: NewsletterFormProps) {
   const [email, setEmail] = useState<string>('')
   const [loading, setLoading] = useState<boolean>(false)
   const [feedback, setFeedback] = useState<NewsletterResponse | null>(null)
@@ -37,7 +41,7 @@ export default function NewsletterForm() {
 
     if (dbError) {
       console.error('DB error:', dbError)
-      setFeedback({ success: false, message: 'No se ha podido suscribir. Inténtalo de nuevo.' })
+      setFeedback({ success: false, message: 'Ya estás suscrito o ha ocurrido un error.' })
       setLoading(false)
       return
     }
@@ -50,19 +54,22 @@ export default function NewsletterForm() {
     if (error) {
       console.error('Function invocation error:', error)
       setFeedback({ success: false, message: 'Error al contactar el servicio de correo. Inténtalo más tarde.' })
+      setLoading(false)
     } else if (data.error) {
       // Error de negocio devuelto por la función
       console.error('Business logic error:', data.error)
       setFeedback({ success: false, message: data.error })
+      setLoading(false)
     } else {
       // Éxito
       console.log('send-welcome response:', data)
-      setFeedback({ success: true, message: data.message || '¡Te has suscrito correctamente! Revisa tu correo.' })
-    }
-
-    setLoading(false)
-    if (feedback?.success) {
+      setLoading(false)
       setEmail('')
+      if (onSuccess) {
+        onSuccess()
+      } else {
+        setFeedback({ success: true, message: data.message || '¡Te has suscrito correctamente! Revisa tu correo.' })
+      }
     }
   }
 
@@ -83,8 +90,8 @@ export default function NewsletterForm() {
       >
         {loading ? 'Enviando...' : 'Suscribirse'}
       </button>
-      {feedback && (
-        <p className={`mt-4 ${feedback.success ? 'text-green-600' : 'text-red-600'}`}>
+      {feedback && !feedback.success && (
+        <p className="mt-4 text-sm text-red-600">
           {feedback.message}
         </p>
       )}
