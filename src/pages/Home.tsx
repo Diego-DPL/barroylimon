@@ -56,7 +56,7 @@ export default function Home() {
 //   ]
 
   return (
-    <>
+    <div className="min-h-screen">
       {/* Hero Section */}
       <section className="relative h-screen flex items-center justify-center overflow-hidden">
         <div className="absolute inset-0">
@@ -277,6 +277,6 @@ export default function Home() {
             </Button>
         </div>
       </Modal>
-    </>
+    </div>
   )
 }
