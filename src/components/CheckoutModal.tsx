@@ -19,6 +19,7 @@ export default function CheckoutModal({ isOpen, onClose }: CheckoutModalProps) {
   const { items } = useCart()
   const [step, setStep] = useState<CheckoutStep>('auth-choice')
 
+  
   // Si el usuario está autenticado, ir directamente al formulario
   useEffect(() => {
     if (user && step === 'auth-choice') {
