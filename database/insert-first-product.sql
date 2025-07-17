@@ -16,10 +16,10 @@ INSERT INTO products (
   stock
 ) VALUES (
   gen_random_uuid(),
-  'Collar Limón Acero inoxidable',
-  'collar-limon-acero-inoxidable',
-  'Elegante collar con colgante de limón fabricado en arcilla mediterránea y cadena de acero inoxidable dorado. Inspirado en la tradición alfarera de la huerta murciana, cada pieza es única y hecha a mano por nuestros artesanos.',
-  25.00,
+  'Pendiente Limón Acero inoxidable',
+  'pendiente-limon-acero-inoxidable',
+  'Elegante pendiente de limón fabricado en arcilla mediterránea y acero inoxidable dorado. Inspirado en la tradición alfarera de la huerta murciana, cada pieza es única y hecha a mano por nuestros artesanos.',
+  30.00,
   10
 )
 ON CONFLICT (slug) DO UPDATE SET
@@ -31,8 +31,8 @@ ON CONFLICT (slug) DO UPDATE SET
 -- 3. Asociar producto con categoría
 INSERT INTO product_categories (product_id, category_id)
 SELECT p.id, c.id
-FROM products p, categories c 
-WHERE p.slug = 'collar-limon-acero-inoxidable' 
+FROM products p, categories c
+WHERE p.slug = 'pendiente-limon-acero-inoxidable'
 AND c.slug = 'nueva-coleccion'
 ON CONFLICT (product_id, category_id) DO NOTHING;
 
@@ -40,11 +40,11 @@ ON CONFLICT (product_id, category_id) DO NOTHING;
 INSERT INTO product_images (product_id, url, alt_text, position)
 SELECT 
   p.id,
-  'https://via.placeholder.com/400x400/d97706/ffffff?text=Collar+Limón',
-  'Collar Limón Acero inoxidable',
+  'https://via.placeholder.com/400x400/d97706/ffffff?text=Pendiente+Limón',
+  'Pendiente Limón Acero inoxidable',
   0
 FROM products p
-WHERE p.slug = 'collar-limon-acero-inoxidable'
+WHERE p.slug = 'pendiente-limon-acero-inoxidable'
 ON CONFLICT DO NOTHING;
 
 -- 5. Verificar que se insertó correctamente
@@ -60,4 +60,4 @@ FROM products p
 LEFT JOIN product_categories pc ON p.id = pc.product_id
 LEFT JOIN categories c ON pc.category_id = c.id
 LEFT JOIN product_images pi ON p.id = pi.product_id
-WHERE p.slug = 'collar-limon-acero-inoxidable';
+WHERE p.slug = 'pendiente-limon-acero-inoxidable';

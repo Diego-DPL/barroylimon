@@ -177,9 +177,9 @@ export default function Home() {
                         slug: product.slug,
                         image: product.images?.[0]?.url
                       })}
-                      className="bg-stone-800 hover:bg-stone-900 text-white px-6 py-2 font-light tracking-wide inline-flex items-center gap-2"
+                      className="bg-stone-800 hover:bg-amber-600 hover:scale-105 hover:shadow-lg text-white px-6 py-2 font-light tracking-wide inline-flex items-center gap-2 transition-all duration-300 ease-out"
                     >
-                      <ShoppingBag className="h-4 w-4" />
+                      <ShoppingBag className="h-4 w-4 transition-transform duration-300 group-hover:scale-110" />
                       Añadir al carrito
                     </Button>
                   </div>
