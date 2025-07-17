@@ -1,16 +1,20 @@
 // import { useState } from "react"
 import { useState, useEffect } from "react"
 import Button from "../components/ui/button"
-// import { ShoppingBag, User, Search, Menu, ArrowRight, Play } from "lucide-react"
+import { ShoppingBag } from "lucide-react"
 import LimonHero from '../assets/LimonAmpliado.jpg';
 import LimonAcero from '../assets/Limon_collar_acero_dorado.JPG';
 // import LogoPNG from '../assets/Logopng.png';
 import NewsletterForm from "../components/NewsletterForm";
 import Modal from "../components/ui/modal";
+import { useProducts } from "../hooks/useProducts";
+import { useCart } from "../contexts/CartContext";
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [showSuccessModal, setShowSuccessModal] = useState(false)
+  const { products, loading: productsLoading } = useProducts()
+  const { addItem } = useCart()
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -142,40 +146,67 @@ export default function Home() {
     </section>
 
       {/* Featured Products */}
-      {/* <section className="py-32 px-6 lg:px-8">
+      <section className="py-32 px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-20">
             <h2 className="text-5xl lg:text-6xl font-light text-stone-800 mb-6 tracking-tight">Piezas Selectas</h2>
             <div className="w-24 h-px bg-amber-600 mx-auto" />
           </div>
 
-          <div className="grid lg:grid-cols-3 gap-12 lg:gap-16">
-            {featuredProducts.map((product) => (
-              <div key={product.id} className="group cursor-pointer">
-                <div className="relative mb-8 overflow-hidden">
-                  <div className="aspect-[4/5] bg-stone-100">
-                    <img
-                      src={product.image}
-                      alt={product.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                    />
+          {productsLoading ? (
+            <div className="text-center py-12">
+              <div className="text-stone-600 font-light">Cargando productos...</div>
+            </div>
+          ) : products.length === 0 ? (
+            <div className="text-center py-12">
+              <div className="text-stone-600 font-light">No hay productos disponibles</div>
+            </div>
+          ) : (
+            <div className="grid lg:grid-cols-3 gap-12 lg:gap-16">
+              {products.map((product) => (
+                <div key={product.id} className="group cursor-pointer">
+                  <div className="relative mb-8 overflow-hidden">
+                    <div className="aspect-[4/5] bg-stone-100">
+                      <img
+                        src={product.images?.[0]?.url || LimonAcero}
+                        alt={product.name}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                      />
+                    </div>
+                    <div className="absolute top-6 left-6">
+                      <span className="text-xs font-light tracking-widest text-stone-600 bg-white/90 px-3 py-1">
+                        {product.categories?.[0] || 'Producto'}
+                      </span>
+                    </div>
                   </div>
-                  <div className="absolute top-6 left-6">
-                    <span className="text-xs font-light tracking-widest text-stone-600 bg-white/90 px-3 py-1">
-                      {product.category}
-                    </span>
-                  </div>
-                </div>
 
-                <div className="text-center">
-                  <h3 className="text-2xl font-light text-stone-800 mb-2 tracking-wide">{product.name}</h3>
-                  <p className="text-xl text-stone-600 font-light">{product.price}€</p>
+                  <div className="text-center mb-6">
+                    <h3 className="text-2xl font-light text-stone-800 mb-2 tracking-wide">{product.name}</h3>
+                    <p className="text-xl text-stone-600 font-light">{product.price}€</p>
+                    <p className="text-sm text-stone-500 mt-2">Stock: {product.stock} unidades</p>
+                  </div>
+
+                  <div className="text-center">
+                    <Button
+                      onClick={() => addItem({
+                        id: product.id,
+                        name: product.name,
+                        price: product.price,
+                        slug: product.slug,
+                        image: product.images?.[0]?.url
+                      })}
+                      className="bg-stone-800 hover:bg-stone-900 text-white px-6 py-2 font-light tracking-wide inline-flex items-center gap-2"
+                    >
+                      <ShoppingBag className="h-4 w-4" />
+                      Añadir al carrito
+                    </Button>
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
-      </section> */}
+      </section>
 
       {/* Process Section */}
       <section className="py-32 bg-white">

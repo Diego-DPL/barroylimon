@@ -1,9 +1,11 @@
 import { useRole } from '../hooks/useRole'
-import { Users, Package, ShoppingCart, Settings, BarChart3, FileText } from 'lucide-react'
+import { useAdminStats } from '../hooks/useAdminStats'
+import { Users, Package, ShoppingCart, Settings, BarChart3, FileText, Tag, AlertTriangle, Clock } from 'lucide-react'
 import { Link } from 'react-router-dom'
 
 export default function AdminDashboard() {
   const { role, loading } = useRole()
+  const { totalUsers, totalProducts, totalOrders, totalSales, pendingOrders, lowStockProducts, loading: statsLoading, error } = useAdminStats()
 
   if (loading) {
     return (
@@ -25,6 +27,23 @@ export default function AdminDashboard() {
           </p>
         </div>
 
+        {/* Error Alert */}
+        {error && (
+          <div className="mb-6 bg-red-50 border border-red-200 rounded-lg p-4">
+            <div className="flex">
+              <div className="flex-shrink-0">
+                <svg className="h-5 w-5 text-red-400" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clipRule="evenodd" />
+                </svg>
+              </div>
+              <div className="ml-3">
+                <h3 className="text-sm font-medium text-red-800">Error al cargar estadísticas</h3>
+                <p className="text-sm text-red-700 mt-1">{error}</p>
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* Admin Stats */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
           <div className="bg-white rounded-lg shadow-sm p-6">
@@ -32,7 +51,13 @@ export default function AdminDashboard() {
               <Users className="h-8 w-8 text-amber-600" />
               <div className="ml-4">
                 <p className="text-sm font-medium text-stone-600">Usuarios</p>
-                <p className="text-2xl font-light text-stone-900">1,234</p>
+                {statsLoading ? (
+                  <p className="text-2xl font-light text-stone-400">Cargando...</p>
+                ) : error ? (
+                  <p className="text-2xl font-light text-red-500">Error</p>
+                ) : (
+                  <p className="text-2xl font-light text-stone-900">{totalUsers.toLocaleString()}</p>
+                )}
               </div>
             </div>
           </div>
@@ -42,7 +67,13 @@ export default function AdminDashboard() {
               <Package className="h-8 w-8 text-amber-600" />
               <div className="ml-4">
                 <p className="text-sm font-medium text-stone-600">Productos</p>
-                <p className="text-2xl font-light text-stone-900">256</p>
+                {statsLoading ? (
+                  <p className="text-2xl font-light text-stone-400">Cargando...</p>
+                ) : error ? (
+                  <p className="text-2xl font-light text-red-500">Error</p>
+                ) : (
+                  <p className="text-2xl font-light text-stone-900">{totalProducts.toLocaleString()}</p>
+                )}
               </div>
             </div>
           </div>
@@ -52,7 +83,13 @@ export default function AdminDashboard() {
               <ShoppingCart className="h-8 w-8 text-amber-600" />
               <div className="ml-4">
                 <p className="text-sm font-medium text-stone-600">Pedidos</p>
-                <p className="text-2xl font-light text-stone-900">89</p>
+                {statsLoading ? (
+                  <p className="text-2xl font-light text-stone-400">Cargando...</p>
+                ) : error ? (
+                  <p className="text-2xl font-light text-red-500">Error</p>
+                ) : (
+                  <p className="text-2xl font-light text-stone-900">{totalOrders.toLocaleString()}</p>
+                )}
               </div>
             </div>
           </div>
@@ -62,7 +99,62 @@ export default function AdminDashboard() {
               <BarChart3 className="h-8 w-8 text-amber-600" />
               <div className="ml-4">
                 <p className="text-sm font-medium text-stone-600">Ventas</p>
-                <p className="text-2xl font-light text-stone-900">€12,345</p>
+                {statsLoading ? (
+                  <p className="text-2xl font-light text-stone-400">Cargando...</p>
+                ) : error ? (
+                  <p className="text-2xl font-light text-red-500">Error</p>
+                ) : (
+                  <p className="text-2xl font-light text-stone-900">€{totalSales.toLocaleString('es-ES', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</p>
+                )}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Additional Quick Stats */}
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+          <div className="bg-white rounded-lg shadow-sm p-6">
+            <div className="flex items-center">
+              <Clock className="h-8 w-8 text-orange-600" />
+              <div className="ml-4">
+                <p className="text-sm font-medium text-stone-600">Pedidos Pendientes</p>
+                {statsLoading ? (
+                  <p className="text-2xl font-light text-stone-400">Cargando...</p>
+                ) : error ? (
+                  <p className="text-2xl font-light text-red-500">Error</p>
+                ) : (
+                  <div className="flex items-center">
+                    <p className="text-2xl font-light text-stone-900">{pendingOrders.toLocaleString()}</p>
+                    {pendingOrders > 0 && (
+                      <span className="ml-2 px-2 py-1 text-xs font-medium bg-orange-100 text-orange-800 rounded-full">
+                        Requiere atención
+                      </span>
+                    )}
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
+
+          <div className="bg-white rounded-lg shadow-sm p-6">
+            <div className="flex items-center">
+              <AlertTriangle className="h-8 w-8 text-red-600" />
+              <div className="ml-4">
+                <p className="text-sm font-medium text-stone-600">Stock Bajo</p>
+                {statsLoading ? (
+                  <p className="text-2xl font-light text-stone-400">Cargando...</p>
+                ) : error ? (
+                  <p className="text-2xl font-light text-red-500">Error</p>
+                ) : (
+                  <div className="flex items-center">
+                    <p className="text-2xl font-light text-stone-900">{lowStockProducts.toLocaleString()}</p>
+                    {lowStockProducts > 0 && (
+                      <span className="ml-2 px-2 py-1 text-xs font-medium bg-red-100 text-red-800 rounded-full">
+                        {'<5 unidades'}
+                      </span>
+                    )}
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -118,6 +210,23 @@ export default function AdminDashboard() {
               className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-amber-600 hover:bg-amber-700 transition-colors"
             >
               Ver Pedidos
+            </Link>
+          </div>
+
+          {/* Discount Codes Management */}
+          <div className="bg-white rounded-lg shadow-sm p-6">
+            <div className="flex items-center mb-4">
+              <Tag className="h-6 w-6 text-amber-600" />
+              <h3 className="text-lg font-medium text-stone-900 ml-2">Códigos de Descuento</h3>
+            </div>
+            <p className="text-stone-600 mb-4">
+              Crea y gestiona códigos promocionales para incentivar ventas.
+            </p>
+            <Link
+              to="/admin/discount-codes"
+              className="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-amber-600 hover:bg-amber-700 transition-colors"
+            >
+              Gestionar Códigos
             </Link>
           </div>
 

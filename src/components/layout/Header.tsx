@@ -1,13 +1,15 @@
 import { Link } from 'react-router-dom'
-import { User, LogOut, Settings } from 'lucide-react'
+import { User, LogOut, Settings, ShoppingBag } from 'lucide-react'
 import { useAuth } from '../../contexts/AuthContext'
 import { useRole } from '../../hooks/useRole'
+import { useCart } from '../../contexts/CartContext'
 import Button from '../ui/button'
 import LogoPNG from '../../assets/Logopng.png';
 
-export default function Header() {
+export default function Header({ onCartOpen }: { onCartOpen?: () => void }) {
     const { user, signOut } = useAuth()
     const { isAdmin } = useRole()
+    const { getTotalItems } = useCart()
 
     const handleSignOut = async () => {
         await signOut()
@@ -53,6 +55,19 @@ export default function Header() {
 
                     {/* Actions */}
                     <div className="flex items-center space-x-4">
+                        {/* Cart Button */}
+                        <button
+                            onClick={onCartOpen}
+                            className="relative p-2 text-stone-700 hover:text-stone-900 transition-colors"
+                        >
+                            <ShoppingBag className="h-6 w-6" />
+                            {getTotalItems() > 0 && (
+                                <span className="absolute -top-1 -right-1 bg-amber-600 text-white text-xs rounded-full h-5 w-5 flex items-center justify-center font-medium">
+                                    {getTotalItems()}
+                                </span>
+                            )}
+                        </button>
+
                         {user ? (
                     <div className="flex items-center space-x-4">
                         {isAdmin && (

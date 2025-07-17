@@ -1,10 +1,23 @@
 import { useState, type FormEvent } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
+import { ArrowLeft } from 'lucide-react'
 import { supabase } from '../utils/supabaseClient'
 import Button from '../components/ui/button'
 import { Input } from '../components/ui/input'
 
-export default function Login() {
+interface LoginProps {
+  onSuccess?: () => void
+  onSwitchToRegister?: () => void
+  onBack?: () => void
+  showBackButton?: boolean
+}
+
+export default function Login({ 
+  onSuccess, 
+  onSwitchToRegister, 
+  onBack, 
+  showBackButton = false 
+}: LoginProps = {}) {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [loading, setLoading] = useState(false)
@@ -24,7 +37,11 @@ export default function Login() {
     if (error) {
       setError(error.message)
     } else {
-      navigate('/')
+      if (onSuccess) {
+        onSuccess()
+      } else {
+        navigate('/')
+      }
     }
 
     setLoading(false)
@@ -34,6 +51,16 @@ export default function Login() {
     <div className="min-h-screen bg-stone-50 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-md w-full space-y-8">
         <div>
+          {showBackButton && onBack && (
+            <button
+              onClick={onBack}
+              className="flex items-center text-stone-600 hover:text-stone-800 transition-colors mb-6"
+            >
+              <ArrowLeft className="h-5 w-5 mr-2" />
+              Volver
+            </button>
+          )}
+          
           <div className="text-center mb-8">
             <h2 className="text-3xl font-light text-stone-800 tracking-tight">
               Iniciar Sesión
@@ -107,12 +134,22 @@ export default function Login() {
             <div>
               <span className="text-stone-600 font-light">
                 ¿No tienes cuenta?{' '}
-                <Link
-                  to="/registro"
-                  className="text-amber-600 hover:text-amber-700 font-light underline"
-                >
-                  Regístrate aquí
-                </Link>
+                {onSwitchToRegister ? (
+                  <button
+                    type="button"
+                    onClick={onSwitchToRegister}
+                    className="text-amber-600 hover:text-amber-700 font-light underline"
+                  >
+                    Regístrate aquí
+                  </button>
+                ) : (
+                  <Link
+                    to="/registro"
+                    className="text-amber-600 hover:text-amber-700 font-light underline"
+                  >
+                    Regístrate aquí
+                  </Link>
+                )}
               </span>
             </div>
           </div>
