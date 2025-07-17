@@ -33,31 +33,12 @@ export default function Home() {
     setShowSuccessModal(true)
   }
 
-//   const [isMenuOpen, setIsMenuOpen] = useState(false)
-
-//   const featuredProducts = [
-//     {
-//       id: 1,
-//       name: "Collar Limón Acero inoxidable",
-//       price: "25",
-//       image: LimonAcero,
-//       category: "Nueva Colección",
-//     },
-//     {
-//       id: 2,
-//       name: "Pendientes Terracota",
-//       price: "195",
-//       image: "https://via.placeholder.com/400x500/d6d3d1/78716c?text=Pendientes+Terracota",
-//       category: "Edición Limitada",
-//     },
-//     {
-//       id: 3,
-//       name: "Anillo Mediterráneo",
-//       price: "245",
-//       image: "https://via.placeholder.com/400x500/d6d3d1/78716c?text=Anillo+Mediterráneo",
-//       category: "Exclusivo",
-//     },
-//   ]
+  const scrollToProducts = () => {
+    const productsSection = document.getElementById('productos');
+    if (productsSection) {
+      productsSection.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
 
   return (
     <div className="min-h-screen">
@@ -82,10 +63,11 @@ export default function Home() {
             Joyería artesanal inspirada en la tradición milenaria de la huerta murciana
           </p>
           <Button
+            onClick={scrollToProducts}
             size="lg"
             className="bg-transparent border border-white text-white hover:bg-white hover:text-stone-900 px-12 py-4 text-lg font-light tracking-wide transition-all duration-300"
           >
-            Muy Pronto
+            Descubrir Colección
             {/* <ArrowRight className="ml-3 h-5 w-5" /> */}
           </Button>
         </div>
@@ -96,25 +78,25 @@ export default function Home() {
         </div>
       </section>
 
-    {/* Coming Soon Section */}
+    {/* Welcome Section */}
     <section className="py-32 bg-gradient-to-b from-stone-50 to-white">
         <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
             <div className="mb-8">
-                <div className="inline-block px-6 py-2 bg-amber-100 text-amber-800 rounded-full text-sm font-light tracking-wide mb-8">
-                    Próximamente
+                <div className="inline-block px-6 py-2 bg-green-100 text-green-800 rounded-full text-sm font-light tracking-wide mb-8">
+                    ¡Ya Disponible!
                 </div>
             </div>
             
             <h2 className="text-5xl lg:text-6xl font-light text-stone-800 mb-8 tracking-tight leading-tight">
-                Muy Pronto
+                Bienvenido a
                 <br />
-                <span className="italic font-serif text-amber-700">Disponible</span>
+                <span className="italic font-serif text-amber-700">Barro y Limón</span>
             </h2>
             
             <p className="text-xl text-stone-600 mb-12 font-light max-w-3xl mx-auto leading-relaxed">
-                Estamos preparando con mimo cada detalle para ofrecerte la mejor experiencia. 
-                Nuestra tienda online estará disponible muy pronto con nuestra primera colección 
-                de joyería arcilla mediterránea.
+                Nuestra tienda online ya está abierta con nuestra primera colección 
+                de joyería arcilla mediterránea. Descubre piezas únicas creadas a mano 
+                por nuestros artesanos en la huerta murciana.
             </p>
             
             <div className="grid md:grid-cols-3 gap-8 mb-16">
@@ -146,7 +128,7 @@ export default function Home() {
     </section>
 
       {/* Featured Products */}
-      <section className="py-32 px-6 lg:px-8">
+      <section id="productos" className="py-32 px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-20">
             <h2 className="text-5xl lg:text-6xl font-light text-stone-800 mb-6 tracking-tight">Piezas Selectas</h2>
@@ -266,10 +248,10 @@ export default function Home() {
         <section className="py-24 bg-amber-50">
             <div className="max-w-4xl mx-auto px-6 lg:px-8 text-center">
                 <h4 className="text-3xl font-light text-stone-800 mb-6 tracking-wide">
-                Manténgase Informado
+                Newsletter Exclusivo
                 </h4>
                 <p className="text-lg text-stone-600 mb-12 font-light">
-                Reciba noticias exclusivas sobre nuevas colecciones y eventos especiales
+                Suscríbete y recibe descuentos exclusivos, acceso anticipado a nuevas colecciones y noticias especiales
                 </p>
                 <NewsletterForm onSuccess={handleSuccess} />
             </div>
@@ -279,14 +261,15 @@ export default function Home() {
         <div className="text-center p-4">
             <div className="mb-4">
                 <div className="inline-block px-4 py-1 bg-amber-100 text-amber-800 rounded-full text-sm font-light tracking-wide">
-                    Próximamente
+                    🎁 Oferta Especial
                 </div>
             </div>
             <h2 className="text-3xl font-light text-stone-800 mb-4 tracking-tight">
-                Nuestra tienda está casi lista
+                ¡Únete a nuestro Newsletter!
             </h2>
             <p className="text-stone-600 mb-8 font-light leading-relaxed">
-                Estamos dando los últimos toques a nuestra colección. Suscríbete a nuestra newsletter para ser el primero en saber cuándo abrimos y recibir ofertas exclusivas.
+                Suscríbete ahora y obtén <strong>descuentos exclusivos</strong>, acceso anticipado a nuevas colecciones 
+                y mantente al tanto de todo lo que ocurre en Barro y Limón. ¡No te pierdas nuestras ofertas especiales!
             </p>
             <NewsletterForm onSuccess={handleSuccess} />
         </div>
@@ -294,17 +277,23 @@ export default function Home() {
 
       <Modal isOpen={showSuccessModal} onClose={() => setShowSuccessModal(false)}>
         <div className="text-center p-8">
+            <div className="mb-4">
+                <div className="inline-block px-4 py-1 bg-green-100 text-green-800 rounded-full text-sm font-light tracking-wide">
+                    ✅ ¡Suscrito con éxito!
+                </div>
+            </div>
             <h2 className="text-3xl font-light text-stone-800 mb-4 tracking-tight">
-                ¡Gracias por suscribirte!
+                ¡Bienvenido a la familia!
             </h2>
             <p className="text-stone-600 mb-8 font-light leading-relaxed">
-                Te hemos enviado un correo de confirmación. Serás el primero en enterarte de nuestro lanzamiento y recibirás noticias exclusivas.
+                Ya formas parte de nuestro newsletter exclusivo. Recibirás descuentos especiales, 
+                acceso anticipado a nuevas colecciones y estarás al tanto de todo lo que pasa en Barro y Limón.
             </p>
             <Button
                 onClick={() => setShowSuccessModal(false)}
                 className="bg-stone-800 hover:bg-stone-900 text-white px-8 py-3 font-light tracking-wide"
             >
-                Cerrar
+                ¡Perfecto!
             </Button>
         </div>
       </Modal>
