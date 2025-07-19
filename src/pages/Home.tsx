@@ -1,5 +1,6 @@
 // import { useState } from "react"
 import { useState, useEffect } from "react"
+import { Link } from "react-router-dom"
 import Button from "../components/ui/button"
 import { ShoppingBag } from "lucide-react"
 import LimonHero from '../assets/LimonAmpliado.jpg';
@@ -9,6 +10,7 @@ import NewsletterForm from "../components/NewsletterForm";
 import Modal from "../components/ui/modal";
 import { useProducts } from "../hooks/useProducts";
 import { useCart } from "../contexts/CartContext";
+import ProductCategories from "../components/ProductCategories";
 
 export default function Home() {
   const [isModalOpen, setIsModalOpen] = useState(false)
@@ -146,37 +148,52 @@ export default function Home() {
           ) : (
             <div className="grid lg:grid-cols-3 gap-12 lg:gap-16">
               {products.map((product) => (
-                <div key={product.id} className="group cursor-pointer">
-                  <div className="relative mb-8 overflow-hidden">
-                    <div className="aspect-[4/5] bg-stone-100">
-                      <img
-                        src={product.images?.[0]?.url || LimonAcero}
-                        alt={product.name}
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
-                      />
+                <div key={product.id} className="group">
+                  <Link to={`/producto/${product.slug}`} className="block">
+                    <div className="relative mb-8 overflow-hidden cursor-pointer">
+                      <div className="aspect-[4/5] bg-stone-100">
+                        <img
+                          src={product.images?.[0]?.url || LimonAcero}
+                          alt={product.name}
+                          className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                        />
+                      </div>
+                      <div className="absolute top-6 left-6">
+                        <span className="text-xs font-light tracking-widest text-stone-600 bg-white/90 px-3 py-1">
+                          {product.categories?.[0]?.name || 'Producto'}
+                        </span>
+                      </div>
                     </div>
-                    <div className="absolute top-6 left-6">
-                      <span className="text-xs font-light tracking-widest text-stone-600 bg-white/90 px-3 py-1">
-                        {product.categories?.[0] || 'Producto'}
-                      </span>
-                    </div>
-                  </div>
 
-                  <div className="text-center mb-6">
-                    <h3 className="text-2xl font-light text-stone-800 mb-2 tracking-wide">{product.name}</h3>
-                    <p className="text-xl text-stone-600 font-light">{product.price}€</p>
-                    <p className="text-sm text-stone-500 mt-2">Stock: {product.stock} unidades</p>
-                  </div>
+                    <div className="text-center mb-6">
+                      <h3 className="text-2xl font-light text-stone-800 mb-2 tracking-wide group-hover:text-amber-700 transition-colors">
+                        {product.name}
+                      </h3>
+                      <p className="text-xl text-stone-600 font-light">{product.price}€</p>
+                      <p className="text-sm text-stone-500 mt-2">Stock: {product.stock} unidades</p>
+                      
+                      {/* Mostrar categorías */}
+                      <div className="mt-3">
+                        <ProductCategories 
+                          categories={product.categories || []} 
+                          variant="badge" 
+                        />
+                      </div>
+                    </div>
+                  </Link>
 
                   <div className="text-center">
                     <Button
-                      onClick={() => addItem({
-                        id: product.id,
-                        name: product.name,
-                        price: product.price,
-                        slug: product.slug,
-                        image: product.images?.[0]?.url
-                      })}
+                      onClick={(e) => {
+                        e.preventDefault()
+                        addItem({
+                          id: product.id,
+                          name: product.name,
+                          price: product.price,
+                          slug: product.slug,
+                          image: product.images?.[0]?.url
+                        })
+                      }}
                       className="bg-stone-800 hover:bg-amber-600 hover:scale-105 hover:shadow-lg text-white px-6 py-2 font-light tracking-wide inline-flex items-center gap-2 transition-all duration-300 ease-out"
                     >
                       <ShoppingBag className="h-4 w-4 transition-transform duration-300 group-hover:scale-110" />

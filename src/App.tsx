@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { AuthProvider } from './contexts/AuthContext'
 import { CartProvider } from './contexts/CartContext'
 import Home from './pages/Home'
+import Product from './pages/Product'
 import Login from './pages/Login'
 import Register from './pages/Register'
 import ForgotPassword from './pages/ForgotPassword'
@@ -38,6 +39,7 @@ function App() {
             <main className="pt-20">
               <Routes>
                 <Route path="/" element={<Home />} />
+                <Route path="/producto/:slug" element={<Product />} />
                 <Route path="/login" element={<Login />} />
                 <Route path="/registro" element={<Register />} />
                 <Route path="/forgot-password" element={<ForgotPassword />} />
