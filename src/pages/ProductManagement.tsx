@@ -156,7 +156,7 @@ export default function ProductManagement() {
                   {product.name}
                 </h3>
                 <p className="text-sm text-stone-600 mb-2">
-                  {product.categories?.[0] || 'Sin categoría'}
+                  {product.categories?.[0]?.name || 'Sin categoría'}
                 </p>
                 <div className="flex justify-between items-center mb-4">
                   <span className="text-xl font-light text-stone-900">
