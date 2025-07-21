@@ -14,7 +14,7 @@ export const sendOrderConfirmationEmail = async ({ orderId, customerEmail }: Sen
       throw new Error('Usuario no autenticado')
     }
 
-    const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-order-email`, {
+    const response = await fetch(`${import.meta.env.VITE_SUPABASE_URL}/functions/v1/send-order-email-mailgun`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
